@@ -39,7 +39,7 @@ register_hooks = {
 }
 
 
-def profile(model, input_size, custom_ops={}, device="cpu"):
+def profile(model, model_input, custom_ops={}, device="cpu"):
     handler_collection = []
 
     def add_hooks(m):
@@ -73,9 +73,9 @@ def profile(model, input_size, custom_ops={}, device="cpu"):
     model.eval().to(device)
     model.apply(add_hooks)
 
-    x = torch.zeros(input_size).to(device)
+    x = torch.zeros().to(device)
     with torch.no_grad():
-        model(x)
+        model(*model_input)
 
     total_ops = 0
     total_params = 0
