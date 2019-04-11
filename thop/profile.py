@@ -73,7 +73,6 @@ def profile(model, model_input, custom_ops={}, device="cpu"):
     model.eval().to(device)
     model.apply(add_hooks)
 
-    x = torch.zeros().to(device)
     with torch.no_grad():
         model(*model_input)
 
